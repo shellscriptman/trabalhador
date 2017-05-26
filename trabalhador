@@ -1,76 +1,76 @@
-#!/bin/bash
-# 23/05/2017
-# instalador de pacotes *.rpm e *.deb
-# criado por felipe silva
-# instale o dialog => sudo yum install dialog ou sudo apt-get install dialog
-dialog --infobox "Programa funciona apenas como super usuário! Caso não seja, digite Ctrl + C e entre como super usuário!" 0 0
-sleep 10
-while true
-do
-dialog --yesno "Deseja passar o nome do pacote ao inves de escolher opções?" 0 0
-if [ $? == "0" ]; then
-opc=$(dialog --inputbox "Qual pacote deseja instalar" 0 0 --stdout)
-dst=$(dialog --title "Trabalhador" --backtitle "Instalador de pacotes" --menu "Qual tipo de pacote?" 0 0 0 \
-DST1 "DEB" \
-DST2 "RPM" \
-DST0 "SAIR" --stdout)
-case $dst in
-DST0)
-clear
-exit
-;;
-DST1)
-echo "Digite (y) para prosseguir ou (n) para cancelar:"
-apt-get install $opc >> /root/trabalhador/trabalhador.db
-dialog --title "Resultado" --textbox /root/trabalhador/trabalhador.db 0 0
-rm /root/trabalhador/trabalhador.db
-;;
-DST2)
-echo "Digite (y) para prosseguir ou (n) para cancelar:"
-yum install $opc >> /root/trabalhador/trabalhador.db
-dialog --title "Resultado" --textbox /root/trabalhador/trabalhador.db 0 0
-rm /root/trabalhador/trabalhador.db
-;;
-*)
-dialog --infobox "Comando não compreendido!" 0 0
-;;
-esac
-else
-opc=$(dialog --title "Trabalhador" --backtitle "Instalador de pacotes" --menu "Qual tipo de pacote?" 0 0 0 \
-DST1 "DEB" \
-DST2 "RPM" \
-DST0 "SAIR" --stdout)
-case $opc in
-DST0)
-clear
-exit
-;;
-DST1)
-dialog --infobox "Não precise informar diretório de usuário, exemplo: /home/douglas" 0 0
-sleep 5
-# instala o pacote
-dialog --infobox "Você deve digitar o caminho do pacote a seguir!" 0 0
-sleep 5
-ins=$(dialog --inputbox "Qual pacote deseja instalar?" 0 0 --stdout)
-# até aqui!
-dpkg -i $ins >> /root/trabalhador/trabalhador.db
-dialog --title "Resultado" --backtitle "Instalador de pacotes" --textbox /root/trabalhador/trabalhador.db 0 0
-rm /root/trabalhador/trabalhador.db
-clear
-;;
-DST2)
-dialog --infobox "Você deve digitar o caminho do pacote a seguir!" 0 0
-sleep 5
-ins=$(dialog --inputbox "Qual pacote deseja instalar?" 0 0 --stdout)
-rpm -i $ins >> /root/trabalhador/trabalhador.db
-dialog --title "Resultado" --backtitle "Instalador de pacotes" --textbox /root/trabalhador/trabalhador.db 0 0
-rm /root/trabalhador/trabalhador.db
-;;
-*)
-dialog --infobox "Comando não compreendido!"
-;;
-esac
-fi
-done
-
-
+#!/bin/bash  
+  # instalador de pacotes *.rpm e *.deb
+  # criado por felipe silva
+  # instale o dialog => sudo yum install dialog ou sudo apt-get install dialog
+  # meus agradecimentos ao maxice8 por melhorar o script!
+ if [ "$(id -u)" != "0" ]; then
+ dialog --infobox "Programa funciona apenas como super usuário!" 0 0
+ exit 1
+ fi
+  while true
+  do
+  dialog --yesno "Deseja passar o nome do pacote ao inves de escolher opções?" 0 0
+ if [ $? == "0" ]; then
+ opc=$(dialog --inputbox "Qual pacote deseja instalar" 0 0 --stdout)
+ dst=$(dialog --title "Trabalhador" --backtitle "Instalador de pacotes" --menu "Qual tipo de pacote?" 0 0 0 \
+ DST1 "DEB" \
+ DST2 "RPM" \
+ DST0 "SAIR" --stdout)
+ case $dst in
+ DST0)
+ clear
+ exit
+ ;;
+ DST1)
+ echo "Digite (y) para prosseguir ou (n) para cancelar:"
+ apt-get install $opc >> /root/trabalhador/trabalhador.db
+ dialog --title "Resultado" --textbox /root/trabalhador/trabalhador.db 0 0
+ rm /root/trabalhador/trabalhador.db
+ ;;
+ DST2)
+ echo "Digite (y) para prosseguir ou (n) para cancelar:"
+ yum install $opc >> /root/trabalhador/trabalhador.db
+ dialog --title "Resultado" --textbox /root/trabalhador/trabalhador.db 0 0
+ rm /root/trabalhador/trabalhador.db
+ ;;
+ *)
+ dialog --infobox "Comando não compreendido!" 0 0
+ ;;
+ esac
+ else
+ opc=$(dialog --title "Trabalhador" --backtitle "Instalador de pacotes" --menu "Qual tipo de pacote?" 0 0 0 \
+ DST1 "DEB" \
+ DST2 "RPM" \
+ DST0 "SAIR" --stdout)
+ case $opc in
+ DST0)
+ clear
+ exit
+ ;;
+ DST1)
+ dialog --infobox "Não precise informar diretório de usuário, exemplo: /home/douglas" 0 0
+ sleep 5
+ # instala o pacote
+ dialog --infobox "Você deve digitar o caminho do pacote a seguir!" 0 0
+ sleep 5
+ ins=$(dialog --inputbox "Qual pacote deseja instalar?" 0 0 --stdout)
+ # até aqui!
+ dpkg -i $ins >> /root/trabalhador/trabalhador.db
+ dialog --title "Resultado" --backtitle "Instalador de pacotes" --textbox /root/trabalhador/trabalhador.db 0 0
+ rm /root/trabalhador/trabalhador.db
+ clear
+ ;;
+ DST2)
+ dialog --infobox "Você deve digitar o caminho do pacote a seguir!" 0 0
+ sleep 5
+ ins=$(dialog --inputbox "Qual pacote deseja instalar?" 0 0 --stdout)
+ rpm -i $ins >> /root/trabalhador/trabalhador.db
+ dialog --title "Resultado" --backtitle "Instalador de pacotes" --textbox /root/trabalhador/trabalhador.db 0 0
+ rm /root/trabalhador/trabalhador.db
+ ;;
+ *)
+ dialog --infobox "Comando não compreendido!"
+ ;;
+ esac
+ fi
+ done
