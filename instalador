@@ -1,0 +1,13 @@
+#!/bin/bash
+# instalador do script trabalhador
+# instalador de pacotes
+# criado por felipe silva
+# 24/05/2017
+echo "Digite sua senha de usuário para instalação"
+sudo mkdir /root/trabalhador
+echo "Em qual diretório se localiza o script trabalhador?"
+read $pgm
+cd $pgm
+sudo cp trabalhador /sbin/trabalhador
+sudo chmod +x /sbin/trabalhador
+echo "Obrigado pela preferencia ;-)"

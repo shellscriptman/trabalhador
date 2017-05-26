@@ -1,0 +1,9 @@
+#################################################################################
+# para instalar o script basta executar o instalador                            #
+# chmod +x instalador                                                           #
+# ./instalador                                                                  #
+# basta seguir os passos pelo instalador e vc terá o programa instalado         #
+# em sua distro!                                                                #
+# OBS: não sei se funciona no slack ou arch                                     #
+# PS: distros deb que usam dpkg roda tranquilo! e distro que roda yum tambem    #
+#################################################################################
