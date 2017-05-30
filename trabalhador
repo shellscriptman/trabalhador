@@ -9,8 +9,7 @@
  fi
   while true
   do
-  dialog --yesno "Deseja passar o nome do pacote ao inves de escolher opções?" 0 0
- if [ $? == "0" ]; then
+ if dialog --yesno "Deseja passar o nome do pacote ao inves de escolher opções?" 0 0; then
  opc=$(dialog --inputbox "Qual pacote deseja instalar" 0 0 --stdout)
  dst=$(dialog --title "Trabalhador" --backtitle "Instalador de pacotes" --menu "Qual tipo de pacote?" 0 0 0 \
  DST1 "DEB" \
